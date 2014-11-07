@@ -6,8 +6,10 @@
 	<link rel="stylesheet" type="text/css" href="css/front.css">
 </head>
 <body>
-<div id = "container">
-<div id = "inner"></div>
+<div class="container">
+<div class="banner"><span class="grayletter">SYNC PHOTO</span></div>
+<div class="inner"></div>
+<div id="info"><span class="grayletter"></span></div>
 </div>
 <script type="text/javascript" src="js/group.js"></script>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -17,7 +19,7 @@
 	});
 	
 	//load more
-	$(window).scroll(function() {  
+	$(window).scroll(function() {
 		var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());  
 		if ($(document).height() <= totalheight) {
 				loadPhotos(nextURL);

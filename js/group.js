@@ -1,4 +1,4 @@
-//group images by day
+// group images by day
 function group(photo) {
 	var result = {}; 
 	$.each(photo, function(i, item){
@@ -11,31 +11,35 @@ function group(photo) {
 	return result;
 };
 
-//timestamp to YYYY-MM-DD
+// timestamp to YYYY-MM-DD
 function timeStampTransfer(timeStamp){
-	if(timeStamp == undefined) return;
+	if(undefined == timeStamp) return;
 	var time = new Date(timeStamp);
 	return time.toISOString().substring(0,10);
 }
 
-//show photos
+// show photos
 function showPhotos(data){
 	for (var key in data)
 	{
-		if($("#"+key).length <= 0 ){
-			$("#inner").append("<div id = '"+key+"' class='clearfix'></div>");
-			$("#"+key).append("<div class='title'>"+key+"</div>");
-			$("#"+key).append("<div class='picbox'></div>");
+		if($("#" + key).length <= 0 ){
+			$(".inner").append("<div id = '" + key + "' class='clearfix'></div>");
+			$("#" + key).append("<div class='title'><span class='mingrayletter'>" + key + "</span></div>");
+			$("#" + key).append("<div class='picbox'></div>");
 		}		
 		$.each(data[key], function(i, item){
-			$("#"+key+" .picbox").append("<div class='box'><div class='pic'><img src='"+item.imageURL+"'></div></div>");
+			$("#" + key + " .picbox").append("<div class='box'><div class='pic'><img src='" + item.imageURL + "'></div></div>");
 		})
 	}
 }
 
-//load photos
+function showInfo(data){
+	$("#info span").html(data);
+}
+
+// load photos
 function loadPhotos(url){
-	if(url == undefined){
+	if(undefined == url){
 		url = 'data/1';
 	}
 
@@ -43,10 +47,14 @@ function loadPhotos(url){
 		type : 'get',
 		url : url,
 		success : function(data) {
-			var photos = JSON.parse(data).photos;
-			nextURL = JSON.parse(data).nextURL;
-			var picGroup = group(photos);
-			showPhotos(picGroup);
+			if(data.length <= 0){
+				showInfo("没有更多图片了");
+			}else{
+				var photos = JSON.parse(data).photos;
+				nextURL = JSON.parse(data).nextURL;
+				var picGroup = group(photos);
+				showPhotos(picGroup);
+			}			
 		}
 	});
 }
