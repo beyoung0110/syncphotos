@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>photo sync</title>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" href="css/front.css">
+</head>
+<body>
+<div id = "container">
+<div id = "inner"></div>
+</div>
+<script type="text/javascript" src="js/group.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">	
+	$(document).ready( function(){
+		loadPhotos();
+	});
+	
+	//load more
+	$(window).scroll(function() {  
+		var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());  
+		if ($(document).height() <= totalheight) {
+				loadPhotos(nextURL);
+		}
+	}); 
+</script>
+</body>
+</html>
