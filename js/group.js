@@ -28,9 +28,10 @@ function showPhotos(data){
 			$("#" + key).append("<div class='picbox'></div>");
 		}		
 		$.each(data[key], function(i, item){
-			$("#" + key + " .picbox").append("<div class='box'><div class='pic'><img src='" + item.imageURL + "'></div></div>");
+			$("#" + key + " .picbox").append("<div class='box'><div class='pic'><img class='lazy' data-original='" + item.imageURL + "'></div></div>");
 		})
 	}
+	$("img.lazy").lazyload();
 }
 
 function showInfo(data){
