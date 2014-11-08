@@ -19,7 +19,7 @@ function timeStampTransfer(timeStamp){
 }
 
 // show photos
-function showPhotos(data){
+function showPhotos(data, lazyLoad){
 	for (var key in data)
 	{
 		if($("#" + key).length <= 0 ){
@@ -28,7 +28,11 @@ function showPhotos(data){
 			$("#" + key).append("<div class='picbox'></div>");
 		}		
 		$.each(data[key], function(i, item){
-			$("#" + key + " .picbox").append("<div class='box'><div class='pic'><img class='lazy' data-original='" + item.imageURL + "'></div></div>");
+			if(lazyLoad){
+				$("#" + key + " .picbox").append("<div class='box'><div class='pic'><img class='lazy' src='images/loading.gif' data-original='" + item.imageURL + "'></div></div>");
+			}else{
+				$("#" + key + " .picbox").append("<div class='box'><div class='pic'><img src='" + item.imageURL + "'></div></div>");
+			}			
 		})
 	}
 	$("img.lazy").lazyload();
@@ -42,6 +46,7 @@ function showInfo(data){
 function loadPhotos(url){
 	if(undefined == url){
 		url = 'data/1';
+		var firstPage = true;
 	}
 
 	$.ajax({
@@ -54,7 +59,11 @@ function loadPhotos(url){
 				var photos = JSON.parse(data).photos;
 				nextURL = JSON.parse(data).nextURL;
 				var picGroup = group(photos);
-				showPhotos(picGroup);
+				if(firstPage){
+					showPhotos(picGroup, false);
+				}else{
+					showPhotos(picGroup, true);
+				}				
 			}			
 		}
 	});
